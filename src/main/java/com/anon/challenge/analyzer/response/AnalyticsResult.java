@@ -4,6 +4,8 @@ public class AnalyticsResult {
 	
 	private String url;
 	
+	private String htmlVersion;
+	
 	private String title;
 
 	private HeaderCount headers;
@@ -14,6 +16,14 @@ public class AnalyticsResult {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getHtmlVersion() {
+		return htmlVersion;
+	}
+
+	public void setHtmlVersion(String htmlVersion) {
+		this.htmlVersion = htmlVersion;
 	}
 
 	public String getTitle() {

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <meta charset="utf-8">
+
+  <title>HTML Analytics</title>
+<link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!--WRAPPER-->
+<div id="wrapper">
+
+  <h1>HTML Analytics 8</h1>
+
+  <div id="formContainer">
+
+    <form>
+      <label for="urlInput">URL:<label>
+      <input id="urlInput" type="text" placeholder="Enter URL..." class="input username" >
+      <!-- <input id="url" type="text" placeholder="Enter URL..." required> -->
+      <button id="analyzeButton" type="button">Analyze</button>
+    </form>
+  </div>
+
+
+  <div id="resultsContainer">
+    <div id="analyticsContainer">
+      <table width="500">
+        <tr>
+          <td class="title" width="190">URL</td>
+          <td width="294">www.testing.com</td>
+        </tr>
+        <tr >
+          <td class="title">title</td>
+          <td>This is testing</td>
+        </tr>
+        <tr >
+          <td colspan="2" class="title">Headings</td>
+        </tr>
+        <tr>
+          <td class="title">h1</td>
+          <td>1</td>
+        </tr>
+        <tr >
+          <td class="title">h2</td>
+          <td>3</td>
+        </tr>
+        <tr >
+          <td class="title">h3</td>
+          <td>5</td>
+        </tr>
+        <tr >
+          <td class="title">h4</td>
+          <td>0</td>
+        </tr>
+        <tr >
+          <td class="title">h5</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td class="title">h6</td>
+          <td>0</td>
+        </tr>
+        <tr >
+          <td class="title" colspan="2">Links</td>
+        </tr>
+        <tr >
+          <td class="title">Internal</td>
+          <td>20</td>
+        </tr>
+        <tr >
+          <td class="title">External</td>
+          <td>5</td>
+        </tr>
+        <tr >
+          <td class="title">Login Form</td>
+          <td>Yes</td>
+        </tr>
+      </table>
+    </div>
+    <div id="linksContainer">
+      <table width="500">
+        <tr>
+          <th width="206" class="title">Link</th>
+          <th width="100" class="title">Available</th>
+          <th width="172" class="title">Reason</th>
+        </tr>
+        <tr>
+          <td>www.facebook.com</th>
+          <td>Yes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>www.google.com</th>
+          <td>No</td>
+          <td>Server not Found</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  </div>
+  <script type="text/javascript" src="script.js"></script>
+  </body>
+  </html>

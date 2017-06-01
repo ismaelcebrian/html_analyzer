@@ -19,6 +19,46 @@ public class HtmlInspectorImplTest {
 	private static final String MEDIUM = "</head><body>";
 	private static final String BOTTOM = "</body></html>";
 
+	private static final String FULL = TOP + MEDIUM + BOTTOM;
+
+	//HTML version:
+	@Test
+	public void testVersionHtml5() {
+		String html = "<!DOCTYPE html>";
+		html += FULL;
+		Document doc = Jsoup.parse(html);
+		String version = inspector.findVersion(doc);
+		assertEquals("HTML5", version);
+	}
+	
+
+	@Test
+	public void testVersionMissing() {
+		String html = FULL;
+		Document doc = Jsoup.parse(html);
+		String version = inspector.findVersion(doc);
+		assertEquals("No Version", version);
+	}
+	
+	@Test
+	public void testVersion401Strict() {
+		String html = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">";
+		html += FULL;
+		Document doc = Jsoup.parse(html);
+		String version = inspector.findVersion(doc);
+		assertEquals("-//W3C//DTD HTML 4.01//EN", version);
+	}
+
+	@Test
+	public void testVersion32() {
+		String html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">";
+		html += FULL;
+		Document doc = Jsoup.parse(html);
+		String version = inspector.findVersion(doc);
+		assertEquals("-//W3C//DTD HTML 3.2 Final//EN", version);
+	}
+	
+	
 	
 	//title:
 	
@@ -45,7 +85,7 @@ public class HtmlInspectorImplTest {
 	
 	@Test
 	public void testTitleMissing() {
-		String html = TOP + MEDIUM + BOTTOM;
+		String html = FULL;
 		Document doc = Jsoup.parse(html);
 		Optional<String> title = inspector.findTitle(doc);
 		assertTrue(!title.isPresent());
@@ -55,7 +95,7 @@ public class HtmlInspectorImplTest {
 	
 	@Test
 	public void testHeadersMissing() {
-		String html = TOP + MEDIUM + BOTTOM;
+		String html = FULL;
 		Document doc = Jsoup.parse(html);
 		HeaderCount headers = inspector.countHeaders(doc);
 		assertEquals(0,headers.getH1());

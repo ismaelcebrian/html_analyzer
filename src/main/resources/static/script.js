@@ -3,12 +3,16 @@
   console.log("Script loaded");
   var resultsDiv = document.getElementById("resultsContainer");
 
-  document.getElementById("analyzeButton").addEventListener("click", function() {
-    console.log("button clicked");
+  document.getElementById("analyzeButton").addEventListener("click", submitForm);
+  document.getElementById("urlForm").addEventListener("submit", function(event) {
+    console.log("The form is submitted")
+    event.preventDefault();
+    submitForm();
+  });
+
+  function submitForm() {
     var req = new XMLHttpRequest();
     var urlInput = document.getElementById("urlInput");
-    console.log(urlInput.value);
-    console.log(encodeURIComponent(urlInput.value));
     req.open('GET', "http://localhost:8080/api/analyze?url=" + encodeURIComponent(urlInput.value));
 
     req.onload = function() {
@@ -16,7 +20,6 @@
         // var ourData = JSON.parse(req.responseText);
         var ourData = JSON.parse(req.responseText);
         //resultsDiv.innerHTML = "<p>" + ourData + "</p>";
-        console.log(ourData);
         parseData(ourData);
       } else {
         console.log("We connected to the server, but it returned an error.");
@@ -28,11 +31,12 @@
     };
 
     req.send();
-  });
+  }
 
   function parseData(data) {
     var table = new ResulTable();
     table.addDataRow("URL", decodeURIComponent(data.url), true)
+      .addDataRow("HTML Version", data.htmlVersion, true)
       .addDataRow("Title", data.title || "<em>none</em>", true)
       .addSectionRow("Headers");
     for (var i = 1; i <= 6; i++) {
@@ -58,7 +62,7 @@
   };
 
   ResulTable.prototype.toHtml = function() {
-    var html = "<table>";
+    var html = "<table width='500'>";
     this.rows.forEach(function(r) {
       html += r.toHtml()
     });
@@ -74,11 +78,14 @@
     this.emphasis = emphasis || false;
   }
   DataRow.prototype.toHtml = function() {
-    var html = "<tr><td>";
-    if (this.emphasis) html += "<strong>";
+    var html = "";
+    if (this.emphasis) {
+      html += "<tr><td width='190' class='title'>";
+    } else {
+      html += "<tr><td width='190'>";
+    }
     html += this.key;
-    if (this.emphasis) html += "</strong>";
-    html += "</td><td>" + this.value + "</td></tr>";
+    html += "</td><td width='294'>" + this.value + "</td></tr>";
     return html;
   }
 
@@ -87,9 +94,9 @@
   }
 
   SectionRow.prototype.toHtml = function() {
-    var html = "<tr><td colspan='2'><strong>";
+    var html = "<tr><td colspan='2' class='title'>";
     html += this.key;
-    html += "</strong></td></tr>";
+    html += "</td></tr>";
     return html;
   }
 

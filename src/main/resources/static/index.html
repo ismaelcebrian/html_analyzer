@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
   <meta charset="utf-8">
+
   <title>HTML Analytics</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-  <h1>HTML Analytics 8</h1>
-  <div id="formContainer">
-    <form>
-      <label for="urlInput">URL:<label>
-      <input id="urlInput" type="text" placeholder="Enter URL...">
-      <!-- <input id="url" type="text" placeholder="Enter URL..." required> -->
-      <button id="analyzeButton" type="button">Analyze</button>
-    </form>
+  <!--WRAPPER-->
+  <div id="wrapper">
+
+    <h1>HTML Analytics</h1>
+
+    <div id="formContainer">
+
+      <form id="urlForm">
+        <label for="urlInput">URL:</label>
+        <input id="urlInput" type="text" placeholder="Enter URL..." class="input username">
+        <!-- <input id="url" type="text" placeholder="Enter URL..." required> -->
+        <button id="analyzeButton" type="button">Analyze</button>
+      </form>
+    </div>
+
+    <div id="resultsContainer">
+      <div id="analyticsContainer">
+      </div>
+      <div id="linksContainer">
+      </div>
+    </div>
   </div>
-  <div id="resultsContainer"></div>
   <script type="text/javascript" src="script.js"></script>
-  </body>
-  </html>
+</body>
+
+</html>

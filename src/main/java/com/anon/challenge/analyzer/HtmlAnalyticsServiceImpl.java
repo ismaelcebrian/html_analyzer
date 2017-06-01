@@ -35,9 +35,10 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 		try {
 			Document doc = Jsoup.connect(url).get();
 			
-			Optional<String> findTitle = htmlInspector.findTitle(doc);
-			if (findTitle.isPresent()) {
-				result.setTitle(findTitle.get());
+			result.setHtmlVersion(htmlInspector.findVersion(doc));
+			Optional<String> title = htmlInspector.findTitle(doc);
+			if (title.isPresent()) {
+				result.setTitle(title.get());
 			}
 			
 			result.setHeaders(htmlInspector.countHeaders(doc));
