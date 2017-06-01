@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>HTML Analytics</title>
+</head>
+
+<body>
+  <h1>HTML Analytics 8</h1>
+  <div id="formContainer">
+    <form>
+      <label for="urlInput">URL:<label>
+      <input id="urlInput" type="text" placeholder="Enter URL...">
+      <!-- <input id="url" type="text" placeholder="Enter URL..." required> -->
+      <button id="analyzeButton" type="button">Analyze</button>
+    </form>
+  </div>
+  <div id="resultsContainer">
+    <div id="analyticsContainer">
+      <table>
+        <tr>
+          <td>URL</td>
+          <td>www.testing.com</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>This is testing</td>
+        </tr>
+        <tr>
+          <td colspan="2">Headings</td>
+        </tr>
+        <tr>
+          <td>h1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>h2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>h3</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>h4</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>h5</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>h6</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td colspan="2">Links</td>
+        </tr>
+        <tr>
+          <td>Internal</td>
+          <td>20</td>
+        </tr>
+        <tr>
+          <td>External</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Login Form</td>
+          <td>Yes</td>
+        </tr>
+      </table>
+    </div>
+    <div id="linksContainer">
+      <table>
+        <tr>
+          <th>Link</th>
+          <th>Available</th>
+          <th>Reason</th>
+        </tr>
+        <tr>
+          <td>www.facebook.com</th>
+          <td>Yes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>www.google.com</th>
+          <td>No</td>
+          <td>Server not Found</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="script.js"></script>
+  </body>
+  </html>
