@@ -1,11 +1,9 @@
 (function() {
 
-  console.log("Script loaded");
-  var resultsDiv = document.getElementById("resultsContainer");
+  var analyticsDiv = document.getElementById("analyticsContainer");
 
   document.getElementById("analyzeButton").addEventListener("click", submitForm);
   document.getElementById("urlForm").addEventListener("submit", function(event) {
-    console.log("The form is submitted")
     event.preventDefault();
     submitForm();
   });
@@ -17,19 +15,20 @@
 
     req.onload = function() {
       if (req.status >= 200 && req.status < 400) {
-        // var ourData = JSON.parse(req.responseText);
-        var ourData = JSON.parse(req.responseText);
-        //resultsDiv.innerHTML = "<p>" + ourData + "</p>";
-        parseData(ourData);
+        var responseData = JSON.parse(req.responseText);
+        parseData(responseData);
       } else {
         console.log("We connected to the server, but it returned an error.");
-        var ourData = JSON.parse(req.responseText);
-        console.log(ourData);
+        console.log(errorData);
+        var errorData = JSON.parse(req.responseText);
+        showError(errorData.error + " - " + errorData.message);
       }
 
     };
     req.onerror = function() {
+
       console.log("Connection error");
+      showError("Connection with the Server failed");
     };
 
     req.send();
@@ -48,8 +47,12 @@
       .addDataRow("Internal", data.linkCount.internal)
       .addDataRow("External", data.linkCount.external);
     table.addDataRow("Login Form", data.hasLogin? "Yes" : "No", true);
-    resultsDiv.innerHTML = table.toHtml();
+    analyticsDiv.innerHTML = table.toHtml();
 
+  }
+
+  function showError(msg) {
+    analyticsDiv.innerHTML = "<p class='error'>" + msg + "</p>";
   }
 
   function ResulTable() {

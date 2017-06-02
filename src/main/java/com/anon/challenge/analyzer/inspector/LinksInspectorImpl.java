@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import com.anon.challenge.analyzer.error.ApllicationException;
+import com.anon.challenge.analyzer.error.ApplicationException;
 import com.anon.challenge.analyzer.response.LinkCount;
 
 @Component
@@ -23,8 +23,8 @@ public class LinksInspectorImpl implements LinksInspector {
 		try {
 			parsedUrl = new URL(url);
 		} catch (MalformedURLException e) {
-			// this should never happen
-			throw new ApllicationException(
+			// this should never happen, since the URL has been validated by Spring
+			throw new ApplicationException(
 					"The target URL passed validation, but could not be converted to an URL object", e);
 		}
 		log.info("querying links");
