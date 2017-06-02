@@ -8,8 +8,6 @@ import com.anon.challenge.analyzer.response.HeaderCount;
 
 public interface HtmlInspector {
 	
-	String findVersion(Document doc);
-
 	Optional<String> findTitle(Document doc);
 	
 	HeaderCount countHeaders(Document doc);

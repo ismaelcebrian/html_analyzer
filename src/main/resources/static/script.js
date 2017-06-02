@@ -37,8 +37,11 @@
   function parseData(data) {
     var table = new ResulTable();
     table.addDataRow("URL", decodeURIComponent(data.url), true)
-      .addDataRow("HTML Version", data.htmlVersion, true)
-      .addDataRow("Title", data.title || "<em>none</em>", true)
+      .addDataRow("HTML Version", data.htmlVersion.name, true);
+    if (data.htmlVersion.publicId) {
+      table.addDataRow("Public Id", data.htmlVersion.publicId);
+    }
+    table.addDataRow("Title", data.title || "<em>none</em>", true)
       .addSectionRow("Headers:");
     for (var i = 1; i <= 6; i++) {
       table.addDataRow("h" + i, data.headers["h" + i]);

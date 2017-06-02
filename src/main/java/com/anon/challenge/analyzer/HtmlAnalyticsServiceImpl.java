@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anon.challenge.analyzer.inspector.HtmlInspector;
+import com.anon.challenge.analyzer.inspector.HtmlVersionInspector;
 import com.anon.challenge.analyzer.inspector.LinksInspector;
 import com.anon.challenge.analyzer.response.AnalyticsResult;
 
@@ -19,6 +20,9 @@ import com.anon.challenge.analyzer.response.AnalyticsResult;
 public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 
 	private Logger log = Logger.getLogger(HtmlAnalyticsServiceImpl.class.getName());
+
+	@Autowired
+	private HtmlVersionInspector htmlVersionInspector;
 
 	@Autowired
 	private HtmlInspector htmlInspector;
@@ -41,7 +45,8 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 		Document doc = Jsoup.connect(url).get();
 		log.info("HTML parsed");
 
-		result.setHtmlVersion(htmlInspector.findVersion(doc));
+		result.setHtmlVersion(htmlVersionInspector.findVersion(doc));
+		
 		Optional<String> title = htmlInspector.findTitle(doc);
 		if (title.isPresent()) {
 			result.setTitle(title.get());
