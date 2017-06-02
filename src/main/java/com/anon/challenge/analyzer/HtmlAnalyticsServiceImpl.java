@@ -7,10 +7,11 @@ import java.util.Optional;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.anon.challenge.analyzer.inspector.HtmlInspector;
+import com.anon.challenge.analyzer.inspector.LinksInspector;
 import com.anon.challenge.analyzer.response.AnalyticsResult;
 
 @Service
@@ -18,6 +19,9 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 	
 	@Autowired
 	private HtmlInspector htmlInspector;
+
+	@Autowired
+	private LinksInspector linksInspector;
 
 	@Override
 	public AnalyticsResult analyze(String url) {
@@ -43,12 +47,12 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 			
 			result.setHeaders(htmlInspector.countHeaders(doc));
 			
+			result.setLinkCount(linksInspector.countLinks(doc, url));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		return result;
 	}

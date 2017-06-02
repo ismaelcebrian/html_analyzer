@@ -1,4 +1,4 @@
-package com.anon.challenge.analyzer;
+package com.anon.challenge.analyzer.inspector;
 
 import java.util.Optional;
 
@@ -8,29 +8,32 @@ import org.jsoup.nodes.Node;
 import org.springframework.stereotype.Component;
 
 import com.anon.challenge.analyzer.response.HeaderCount;
-import com.anon.challenge.analyzer.response.LinkCount;
 
 @Component
 public class HtmlInspectorImpl implements HtmlInspector {
-	
-	
 
 	@Override
 	public String findVersion(Document doc) {
 		Optional<Node> docTypeNode = doc.childNodes().stream().filter(node -> node instanceof DocumentType).findFirst();
-		//TODO constants, and return names for other values
-		if (!docTypeNode.isPresent()) return "No Version";
+		// TODO constants, and return names for other values
+		if (!docTypeNode.isPresent()) {
+			return "No Version";
+		}
 		DocumentType docType = (DocumentType) docTypeNode.get();
-		
+
 		String publicId = docType.attr("publicid");
-		if ("".equals(publicId)) return "HTML5";
+		if ("".equals(publicId)) {
+			return "HTML5";
+		}
 		return publicId;
 	}
 
 	@Override
 	public Optional<String> findTitle(Document doc) {
 		String titleText = doc.title();
-		if (titleText.isEmpty()) return Optional.empty();
+		if (titleText.isEmpty()) {
+			return Optional.empty();
+		}
 		return Optional.of(titleText);
 	}
 
@@ -44,12 +47,6 @@ public class HtmlInspectorImpl implements HtmlInspector {
 		result.setH5(doc.getElementsByTag("h5").size());
 		result.setH6(doc.getElementsByTag("h6").size());
 		return result;
-	}
-
-	@Override
-	public LinkCount countLinks(Document doc) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

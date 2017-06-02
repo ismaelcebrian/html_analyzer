@@ -23,6 +23,8 @@
         parseData(ourData);
       } else {
         console.log("We connected to the server, but it returned an error.");
+        var ourData = JSON.parse(req.responseText);
+        console.log(ourData);
       }
 
     };
@@ -38,10 +40,13 @@
     table.addDataRow("URL", decodeURIComponent(data.url), true)
       .addDataRow("HTML Version", data.htmlVersion, true)
       .addDataRow("Title", data.title || "<em>none</em>", true)
-      .addSectionRow("Headers");
+      .addSectionRow("Headers:");
     for (var i = 1; i <= 6; i++) {
       table.addDataRow("h" + i, data.headers["h" + i]);
     }
+    table.addSectionRow("Number of Hypermedia Links:")
+      .addDataRow("Internal", data.linkCount.internal)
+      .addDataRow("External", data.linkCount.external);
     resultsDiv.innerHTML = table.toHtml();
 
   }

@@ -9,6 +9,8 @@ public class AnalyticsResult {
 	private String title;
 
 	private HeaderCount headers;
+	
+	private LinkCount linkCount;
 
 	public String getUrl() {
 		return url;
@@ -40,6 +42,14 @@ public class AnalyticsResult {
 
 	public void setHeaders(HeaderCount headers) {
 		this.headers = headers;
+	}
+
+	public LinkCount getLinkCount() {
+		return linkCount;
+	}
+
+	public void setLinkCount(LinkCount linkCount) {
+		this.linkCount = linkCount;
 	}
 
 }

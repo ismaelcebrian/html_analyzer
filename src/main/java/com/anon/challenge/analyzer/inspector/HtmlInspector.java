@@ -1,11 +1,10 @@
-package com.anon.challenge.analyzer;
+package com.anon.challenge.analyzer.inspector;
 
 import java.util.Optional;
 
 import org.jsoup.nodes.Document;
 
 import com.anon.challenge.analyzer.response.HeaderCount;
-import com.anon.challenge.analyzer.response.LinkCount;
 
 public interface HtmlInspector {
 	
@@ -14,8 +13,6 @@ public interface HtmlInspector {
 	Optional<String> findTitle(Document doc);
 	
 	HeaderCount countHeaders(Document doc);
-	
-	LinkCount countLinks(Document doc);
 	
 	boolean hasLogin(Document doc);
 
