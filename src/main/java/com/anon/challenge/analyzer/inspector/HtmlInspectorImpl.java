@@ -4,9 +4,7 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.DocumentType;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
@@ -16,22 +14,6 @@ import com.anon.challenge.analyzer.response.HeaderCount;
 public class HtmlInspectorImpl implements HtmlInspector {
 	
 	private Logger log = Logger.getLogger(HtmlInspectorImpl.class.getName());
-
-	@Override
-	public String findVersion(Document doc) {
-		Optional<Node> docTypeNode = doc.childNodes().stream().filter(node -> node instanceof DocumentType).findFirst();
-		// TODO constants, and return names for other values
-		if (!docTypeNode.isPresent()) {
-			return "No Version";
-		}
-		DocumentType docType = (DocumentType) docTypeNode.get();
-
-		String publicId = docType.attr("publicid");
-		if ("".equals(publicId)) {
-			return "HTML5";
-		}
-		return publicId;
-	}
 
 	@Override
 	public Optional<String> findTitle(Document doc) {

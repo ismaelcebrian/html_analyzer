@@ -1,17 +1,17 @@
 package com.anon.challenge.analyzer.response;
 
 public class AnalyticsResult {
-	
+
 	private String url;
-	
-	private String htmlVersion;
-	
+
+	private HtmlVersion htmlVersion;
+
 	private String title;
 
 	private HeaderCount headers;
-	
+
 	private LinkCount linkCount;
-	
+
 	private boolean hasLogin;
 
 	public String getUrl() {
@@ -22,11 +22,11 @@ public class AnalyticsResult {
 		this.url = url;
 	}
 
-	public String getHtmlVersion() {
+	public HtmlVersion getHtmlVersion() {
 		return htmlVersion;
 	}
 
-	public void setHtmlVersion(String htmlVersion) {
+	public void setHtmlVersion(HtmlVersion htmlVersion) {
 		this.htmlVersion = htmlVersion;
 	}
 
