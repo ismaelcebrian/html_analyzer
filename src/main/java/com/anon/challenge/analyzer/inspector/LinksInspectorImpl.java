@@ -35,49 +35,41 @@ public class LinksInspectorImpl implements LinksInspector {
 		log.debug("querying links");
 		Elements links = doc.select("a[href]");
 		log.debug(String.format("Number of links found: %d", links.size()));
-		int internal = 0, external = 0, malformed = 0;
+		
+		//iterate the links found, and compare the domain to count as external or internal
+		int internal = 0, external = 0;
 		for (int i = 0; i < links.size(); i++) {
 			String href = links.get(i).attr("abs:href");
-			if (!isValidUrl(href)) {
-				log.info("This is not a well-formed url: " + href);
-				log.info("It comes from link " + links.get(i).outerHtml());
-
-			} else {
-				log.info("This is a well-formed url: " + href);
-			}
 			try {
 				URI linkUrl = new URI(href);
+				if (!"http".equals(linkUrl.getScheme()) && !"https".equals(linkUrl.getScheme())) {
+					//ignore other types of links
+					continue;
+				}
 				if (domain.equals(extractDomain(linkUrl))) {
 					internal++;
 				} else {
 					external++;
 				}
 			} catch (URISyntaxException e) {
-				// TODO change this?
 				// Just ignore links with malformed URLs
-				// TODO debug
-				malformed++;
-				log.error("malformed URL in link", e);
 			}
 		}
 		result.setInternal(internal);
 		result.setExternal(external);
-		// TODO debug
-		log.info("Number of malformed links: " + malformed);
-
 		return result;
 	}
 
-	private boolean isValidUrl(String url) {
-		try {
-			new URI(url);
-		} catch (URISyntaxException e) {
-			return false;
-		}
-		return true;
 
-	}
-
+	/**
+	 * extracts the domain from and URI
+	 * It splits the host of the URI in period-separated labels.
+	 * If there 2 or less labels (localhost... ) the whole host is taken as domain
+	 * For domains of the type google.com, the last two labels are used as domains
+	 * For domains of the type google.co.uk, the last three labels are used
+	 * @param uri
+	 * @return
+	 */
 	private String extractDomain(URI uri) {
 		String host = uri.getHost();
 		if (host.startsWith("www.")) {

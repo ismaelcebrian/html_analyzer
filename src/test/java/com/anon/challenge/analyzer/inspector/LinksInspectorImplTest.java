@@ -10,7 +10,6 @@ import com.anon.challenge.analyzer.response.LinkCount;
 
 public class LinksInspectorImplTest {
 	
-	//TODO
 	private LinksInspector inspector = new LinksInspectorImpl();
 	
 	//Let's make html sandwiches

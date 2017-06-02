@@ -24,6 +24,7 @@ public class HtmlVersionInspectorImpl implements HtmlVersionInspector {
 	
 	@PostConstruct
 	public void initializeMap() {
+		//The rest of publicIds and names in the standar should be added here
 		versionByPublicId.put("-//W3C//DTD HTML 4.01//EN", "HTML 4.01 Strict");
 		versionByPublicId.put("-//W3C//DTD HTML 4.01 Transitional//EN", "HTML 4.01 Transitional");
 		versionByPublicId.put("-//W3C//DTD HTML 4.01 Frameset//EN", "HTML 4.01 Frameset");
@@ -33,7 +34,6 @@ public class HtmlVersionInspectorImpl implements HtmlVersionInspector {
 	public HtmlVersion findVersion(Document doc) {
 		HtmlVersion version = new HtmlVersion();
 		Optional<Node> docTypeNode = doc.childNodes().stream().filter(node -> node instanceof DocumentType).findFirst();
-		// TODO constants, and return names for other values
 		if (!docTypeNode.isPresent()) {
 			version.setName(NO_VERSION);
 			return version;

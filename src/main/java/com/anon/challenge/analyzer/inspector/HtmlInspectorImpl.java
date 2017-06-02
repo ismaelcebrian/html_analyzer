@@ -36,23 +36,29 @@ public class HtmlInspectorImpl implements HtmlInspector {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.anon.challenge.analyzer.inspector.HtmlInspector#hasLogin(org.jsoup.nodes.Document)
+	 * Checks if there is a login form. The criterion is simple: just looks for a form with exactly one 
+	 * one password field, and either exactly one text input field or one email field (or both)
+	 */
 	@Override
 	public boolean hasLogin(Document doc) {
-		log.info("Looking for login form");
+		log.debug("Looking for login form");
 		
 		Elements forms = doc.select("form");
-		log.info(String.format("found %d forms", forms.size()));
+		log.debug(String.format("found %d forms", forms.size()));
 		for (int i = 0; i< forms.size(); i++) {
 			Element form = forms.get(i);
-			Elements passwords = form.select("input[type='password'");
-			Elements textInputs = form.select("input[type='text'");
-			if(passwords.size() == 1 && textInputs.size() == 1) {
-				log.info("login form found");
+			Elements passwords = form.select("input[type='password']");
+			Elements textInputs = form.select("input[type='text']");
+			Elements emailInputs = form.select("input[type='email']");
+			if(passwords.size() == 1 && (textInputs.size() == 1 || emailInputs.size() == 1)) {
+				log.debug("login form found");
 				return true; 
 			}
 			
 		}
-		log.info("login form not found");
+		log.debug("login form not found");
 		return false;
 	}
 
