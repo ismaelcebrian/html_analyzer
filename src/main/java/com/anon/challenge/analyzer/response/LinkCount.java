@@ -2,6 +2,16 @@ package com.anon.challenge.analyzer.response;
 
 public class LinkCount {
 	
+	/**
+	 * Number of links in the page that point to pages in the same domain as the original URL (including subdomains)
+	 */
+	private int internal;
+	
+	/**
+	 * Number of links in the page that point to pages in other domains
+	 */
+	private int external;
+
 	public int getInternal() {
 		return internal;
 	}
@@ -17,9 +27,5 @@ public class LinkCount {
 	public void setExternal(int external) {
 		this.external = external;
 	}
-
-	private int internal;
-
-	private int external;
 
 }

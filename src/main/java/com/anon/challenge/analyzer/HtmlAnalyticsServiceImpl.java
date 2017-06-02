@@ -38,12 +38,13 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 		try {
 			result.setUrl(URLEncoder.encode(url, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
+			//Only happens if UTF-8 is not supported
 			log.error(e.getMessage(), e);
 		}
 
-		log.info("Connecting to URL and parsing HTML");
+		log.debug("Connecting to URL and parsing HTML");
 		Document doc = Jsoup.connect(url).get();
-		log.info("HTML parsed");
+		log.debug("HTML parsed");
 
 		result.setHtmlVersion(htmlVersionInspector.findVersion(doc));
 		

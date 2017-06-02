@@ -1,5 +1,8 @@
 package com.anon.challenge.analyzer.response;
 
+/**
+ * Container for the results of all the Analytics performed in an URL
+ */
 public class AnalyticsResult {
 
 	private String url;
