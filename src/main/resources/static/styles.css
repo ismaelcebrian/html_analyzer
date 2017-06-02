@@ -21,7 +21,7 @@ label {
   font-weight:700;
 }
 #formContainer .input {
-	width: 270px;
+	width: 470px;
 	padding: 15px 25px;
 	margin-right:20px;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -82,12 +82,12 @@ label {
 }
 #wrapper {
 
-	width: 500px;
+	width: 700px;
 	height: 400px;
 	position: absolute;
 	left: 50%;
 	top: 30%;
-	margin-left: -250px;
+	margin-left: -350px;
 	margin-top: -200px;
 }
 
@@ -98,7 +98,7 @@ label {
 #analyticsContainer table{
 	padding:10px;
   	margin: 0 0 20px 0;
-  	width: 100%;
+  	width: 700px;
   	box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
   	display: block;
@@ -109,6 +109,10 @@ td, th { border: 1px solid transparent; height: 30px; padding:3px 8px 3px 8px;}
 th { background: #D3D3D3; font-weight: bold; }
 
 td { background: #FAFAFA;  }
+
+td.firstColumn { width: 190px; }
+
+td.secondColumn { width: 494px; }
 
 .title{ font-weight:700;}
 

@@ -46,7 +46,7 @@
     for (var i = 1; i <= 6; i++) {
       table.addDataRow("h" + i, data.headers["h" + i]);
     }
-    table.addSectionRow("Number of Hypermedia Links:")
+    table.addSectionRow("Number of Links:")
       .addDataRow("Internal", data.linkCount.internal)
       .addDataRow("External", data.linkCount.external);
     table.addDataRow("Login Form", data.hasLogin? "Yes" : "No", true);
@@ -74,7 +74,7 @@
   };
 
   ResulTable.prototype.toHtml = function() {
-    var html = "<table width='500'>";
+    var html = "<table>";
     this.rows.forEach(function(r) {
       html += r.toHtml()
     });
@@ -92,12 +92,12 @@
   DataRow.prototype.toHtml = function() {
     var html = "";
     if (this.emphasis) {
-      html += "<tr><td width='190' class='title'>";
+      html += "<tr><td class='title firstColumn'>";
     } else {
-      html += "<tr><td width='190'>";
+      html += "<tr><td class='firstColumn'>";
     }
     html += this.key;
-    html += "</td><td width='294'>" + this.value + "</td></tr>";
+    html += "</td><td class='secondColumn'>" + this.value + "</td></tr>";
     return html;
   }
 
