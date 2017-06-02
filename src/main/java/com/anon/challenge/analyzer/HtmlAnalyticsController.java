@@ -15,7 +15,6 @@ import com.anon.challenge.analyzer.response.AnalyticsResult;
 @RestController
 public class HtmlAnalyticsController {
 	
-	//private Logger log = Logger.getLogger(HtmlAnalyticsController.class.getCanonicalName());
 	private Logger log = Logger.getLogger(HtmlAnalyticsController.class.getName());
 	
 	@Autowired
