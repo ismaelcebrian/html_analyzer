@@ -47,6 +47,7 @@
     table.addSectionRow("Number of Hypermedia Links:")
       .addDataRow("Internal", data.linkCount.internal)
       .addDataRow("External", data.linkCount.external);
+    table.addDataRow("Login Form", data.hasLogin? "Yes" : "No", true);
     resultsDiv.innerHTML = table.toHtml();
 
   }

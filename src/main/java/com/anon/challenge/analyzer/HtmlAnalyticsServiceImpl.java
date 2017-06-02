@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import com.anon.challenge.analyzer.response.AnalyticsResult;
 
 @Service
 public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
+	
+	private Logger log = Logger.getLogger(HtmlAnalyticsServiceImpl.class.getName());
 	
 	@Autowired
 	private HtmlInspector htmlInspector;
@@ -37,7 +40,9 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 		}
 		
 		try {
+			log.info("Connecting to URL and parsing HTML");
 			Document doc = Jsoup.connect(url).get();
+			log.info("HTML parsed");
 			
 			result.setHtmlVersion(htmlInspector.findVersion(doc));
 			Optional<String> title = htmlInspector.findTitle(doc);
@@ -48,6 +53,8 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 			result.setHeaders(htmlInspector.countHeaders(doc));
 			
 			result.setLinkCount(linksInspector.countLinks(doc, url));
+			
+			result.setHasLogin(htmlInspector.hasLogin(doc));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

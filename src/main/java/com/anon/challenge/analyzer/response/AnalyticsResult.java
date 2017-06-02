@@ -11,6 +11,8 @@ public class AnalyticsResult {
 	private HeaderCount headers;
 	
 	private LinkCount linkCount;
+	
+	private boolean hasLogin;
 
 	public String getUrl() {
 		return url;
@@ -50,6 +52,14 @@ public class AnalyticsResult {
 
 	public void setLinkCount(LinkCount linkCount) {
 		this.linkCount = linkCount;
+	}
+
+	public boolean isHasLogin() {
+		return hasLogin;
+	}
+
+	public void setHasLogin(boolean hasLogin) {
+		this.hasLogin = hasLogin;
 	}
 
 }

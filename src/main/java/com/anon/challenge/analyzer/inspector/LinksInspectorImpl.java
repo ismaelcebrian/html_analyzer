@@ -27,8 +27,9 @@ public class LinksInspectorImpl implements LinksInspector {
 			throw new ApllicationException(
 					"The target URL passed validation, but could not be converted to an URL object", e);
 		}
-
+		log.info("querying links");
 		Elements links = doc.select("a[href]");
+		log.info(String.format("Number of links found: %d", links.size()));
 		int internal = 0, external = 0, malformed = 0;
 		for (int i = 0; i < links.size(); i++) {
 			String href = links.get(i).attr("abs:href");
