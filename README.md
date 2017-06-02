@@ -18,7 +18,7 @@ in the challenge description.
  
  ### Description of the solution
  
- The backend par consist of an RESTful api of with a single endpoint, available under `localhost:8080/api/analyze?url=...` through a GET request. The endpoint **requires** only one parameter (url), whose value must be a well formed encoded URL (including protocol). When this remote method is called, the server connects to the given URL, parses the HTML using Jsoup and executes a series of analytics as specified in the description of the challenge. Then it returns a JSON object like the followwing example:
+ The backend part consist of a RESTful api with a single endpoint, available under `localhost:8080/api/analyze?url=...` through a GET request. The endpoint **requires** only one parameter (url), whose value must be a well formed encoded URL (including protocol). When this remote method is called, the server connects to the given URL, parses the HTML using Jsoup and executes a series of analytics as specified in the description of the challenge. Then it returns a JSON object like the following example:
  ```json
  {
     "url":"https%3A%2F%2Fgithub.com%2Flogin",
@@ -42,6 +42,13 @@ in the challenge description.
     "hasLogin":true
 }
 ```
- 
+ This json is used by the frontend to create a table to display the results.
  
  ### Assumptions and Design Decisions
+ 
+ **Counting Links**: Only `<a>` elements with a href attribute are considered, and only if the value of href is well formed url (or can be parsed to a well formed, in the case of relative links) with the protocols "http" or "https". A link is considered a internal link if the domain is the same as the one in the provided url. Subdomains are taken into account, both if the domain is of the form "google.com" or "google.co.uk".
+ 
+ **Login Form**: One of the things to analyze if the url contains a login form. I wanted to find a solution that was not human language dependant, that recogniced the login form in the url listed (github and spiegel.de), and that didn't result in a false positive for the registration form of the same two websites. I decided for a quite simple solution. A page is considered to have a login form if contains a `<form>` element that:
+1. Contains exactly one input with type=pasword
+2. And contains exactly one text field or exactly one email field
+This way I discard all password confirmation fields etc. I think this is ok for this prototype, but the study of more cases would be convenient to see if it is an acceptable solution.
