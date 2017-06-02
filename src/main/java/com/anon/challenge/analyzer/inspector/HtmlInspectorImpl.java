@@ -2,15 +2,20 @@ package com.anon.challenge.analyzer.inspector;
 
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.DocumentType;
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import com.anon.challenge.analyzer.response.HeaderCount;
 
 @Component
 public class HtmlInspectorImpl implements HtmlInspector {
+	
+	private Logger log = Logger.getLogger(HtmlInspectorImpl.class.getName());
 
 	@Override
 	public String findVersion(Document doc) {
@@ -51,7 +56,21 @@ public class HtmlInspectorImpl implements HtmlInspector {
 
 	@Override
 	public boolean hasLogin(Document doc) {
-		// TODO Auto-generated method stub
+		log.info("Looking for login form");
+		
+		Elements forms = doc.select("form");
+		log.info(String.format("found %d forms", forms.size()));
+		for (int i = 0; i< forms.size(); i++) {
+			Element form = forms.get(i);
+			Elements passwords = form.select("input[type='password'");
+			Elements textInputs = form.select("input[type='text'");
+			if(passwords.size() == 1 && textInputs.size() == 1) {
+				log.info("login form found");
+				return true; 
+			}
+			
+		}
+		log.info("login form not found");
 		return false;
 	}
 

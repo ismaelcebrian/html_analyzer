@@ -3,6 +3,8 @@ package com.anon.challenge.analyzer.inspector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import org.jsoup.Jsoup;
@@ -149,4 +151,61 @@ public class HtmlInspectorImplTest {
 		assertEquals(1,headers.getH6());
 	}
 	
+	
+	//login:
+	
+	@Test
+	public void loginSpiegelTest() throws IOException {
+		
+		File input = new File( getClass().getClassLoader().getResource("mock/spiegelLogin.html").getFile());
+		Document doc = Jsoup.parse(input, "UTF-8", "https://www.spiegel.de/meinspiegel/login.html");
+		boolean hasLogin = inspector.hasLogin(doc);
+		assertTrue(hasLogin);
+	}
+
+	@Test
+	public void loginGithubTest() throws IOException {
+		
+		File input = new File( getClass().getClassLoader().getResource("mock/githubLogin.html").getFile());
+		Document doc = Jsoup.parse(input, "UTF-8");
+		boolean hasLogin = inspector.hasLogin(doc);
+		assertTrue(hasLogin);
+	}
+	
+	@Test
+	public void registerGithubTest() throws IOException {
+		
+		File input = new File( getClass().getClassLoader().getResource("mock/githubRegister.html").getFile());
+		Document doc = Jsoup.parse(input, "UTF-8");
+		boolean hasLogin = inspector.hasLogin(doc);
+		assertTrue(!hasLogin);
+	}
+
+	@Test
+	public void registerSpiegelTest() throws IOException {
+		
+		File input = new File( getClass().getClassLoader().getResource("mock/spiegelRegister.html").getFile());
+		Document doc = Jsoup.parse(input, "UTF-8");
+		boolean hasLogin = inspector.hasLogin(doc);
+		assertTrue(!hasLogin);
+	}
+	
+	@Test
+	public void loginEmtpyTest() throws IOException {
+		
+		String html = FULL;
+		Document doc = Jsoup.parse(html);
+		boolean hasLogin = inspector.hasLogin(doc);
+		assertTrue(!hasLogin);
+	}
+	
+	@Test
+	public void loginMissingTest() throws IOException {
+		
+		File input = new File( getClass().getClassLoader().getResource("mock/headers1.html").getFile());
+		Document doc = Jsoup.parse(input, "UTF-8", "https://localhost:8080/headers1.html");
+		boolean hasLogin = inspector.hasLogin(doc);
+		assertTrue(!hasLogin);
+	}
+
 }
