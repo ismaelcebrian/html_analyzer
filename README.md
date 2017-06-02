@@ -77,4 +77,4 @@ This way I discard all password confirmation fields etc. I think this is ok for 
 Some of that info is displayed on the frontend. This is ok for a prototype but not good enough for a final product.
 
 ### Optional Part:
-The optional part of the challenge is alas not implemented. To check if all the links are accesible via https, I would use the URIs that are already parsed while counting the links. From that list I would use a multihreaded stream to produce a series of CollectableFuture, so the links can be pinged in parallel.
+The optional part of the challenge is alas not implemented. To check if all the links are accesible via https, I would use the URIs that are already parsed while counting the links. From that list I would use a multihreaded stream to produce a series of CollectableFuture, so the links can be checked in parallel.
