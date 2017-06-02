@@ -57,7 +57,7 @@ This way I discard all password confirmation fields etc. I think this is ok for 
 
 
 
-###Limitations of the solution, and things to improve:
+### Limitations of the solution, and things to improve:
 **The frontend**: The "frontend" is quite rudimentary. The form should be much more user friendly: Provide a dropdown with the values "http" and "https", so the user does not have to type the protocol, only submit if the url is not empty... while the request is running (since just parsing the html with Jsoup takes several seconds sometimes), there should be an indication in the frontend that is waiting for an answer. And so on.
 
 **HTML Version**: The structure is prepared for the server to recognize and name all the html versions in [this page](https://www.w3.org/QA/2002/04/valid-dtd-list.html), but alas only HTML5 and HTML 4.1 are actually recognized. It's a matter of adding values to a map though.
@@ -75,3 +75,6 @@ This way I discard all password confirmation fields etc. I think this is ok for 
 }
 ```
 Some of that info is displayed on the frontend. This is ok for a prototype but not good enough for a final product.
+
+### Optional Part:
+The optional part of the challenge is alas not implemented. To check if all the links are accesible via https, I would use the URIs that are already parsed while counting the links. From that list I would use a multihreaded stream to produce a series of CollectableFuture, so the links can be pinged in parallel.
