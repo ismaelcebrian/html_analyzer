@@ -1,10 +1,12 @@
 (function() {
 
   console.log("Script loaded");
-  var resultsDiv = document.getElementById("resultsContainer");
+  var analyticsDiv = document.getElementById("analyticsContainer");
 
   document.getElementById("analyzeButton").addEventListener("click", submitForm);
   document.getElementById("urlForm").addEventListener("submit", function(event) {
+    console.log("The form is submitted")
+
     console.log("The form is submitted")
     event.preventDefault();
     submitForm();
@@ -24,11 +26,12 @@
       } else {
         console.log("We connected to the server, but it returned an error.");
         var ourData = JSON.parse(req.responseText);
-        console.log(ourData);
+        showError(ourData.error + " - " + ourData.message);
       }
 
     };
     req.onerror = function() {
+
       console.log("Connection error");
     };
 
@@ -48,8 +51,12 @@
       .addDataRow("Internal", data.linkCount.internal)
       .addDataRow("External", data.linkCount.external);
     table.addDataRow("Login Form", data.hasLogin? "Yes" : "No", true);
-    resultsDiv.innerHTML = table.toHtml();
+    analyticsDiv.innerHTML = table.toHtml();
 
+  }
+
+  function showError(msg) {
+    analyticsDiv.innerHTML = "<p class='error'>" + msg + "</p>";
   }
 
   function ResulTable() {

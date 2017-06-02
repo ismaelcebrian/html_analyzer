@@ -17,9 +17,9 @@ import com.anon.challenge.analyzer.response.AnalyticsResult;
 
 @Service
 public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
-	
+
 	private Logger log = Logger.getLogger(HtmlAnalyticsServiceImpl.class.getName());
-	
+
 	@Autowired
 	private HtmlInspector htmlInspector;
 
@@ -27,40 +27,32 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 	private LinksInspector linksInspector;
 
 	@Override
-	public AnalyticsResult analyze(String url) {
-		
+	public AnalyticsResult analyze(String url) throws IOException {
+
 		AnalyticsResult result = new AnalyticsResult();
 
 		try {
 			result.setUrl(URLEncoder.encode(url, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			//If UTF-8 is not supported...
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
-		
-		try {
-			log.info("Connecting to URL and parsing HTML");
-			Document doc = Jsoup.connect(url).get();
-			log.info("HTML parsed");
-			
-			result.setHtmlVersion(htmlInspector.findVersion(doc));
-			Optional<String> title = htmlInspector.findTitle(doc);
-			if (title.isPresent()) {
-				result.setTitle(title.get());
-			}
-			
-			result.setHeaders(htmlInspector.countHeaders(doc));
-			
-			result.setLinkCount(linksInspector.countLinks(doc, url));
-			
-			result.setHasLogin(htmlInspector.hasLogin(doc));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		log.info("Connecting to URL and parsing HTML");
+		Document doc = Jsoup.connect(url).get();
+		log.info("HTML parsed");
+
+		result.setHtmlVersion(htmlInspector.findVersion(doc));
+		Optional<String> title = htmlInspector.findTitle(doc);
+		if (title.isPresent()) {
+			result.setTitle(title.get());
 		}
-		
+
+		result.setHeaders(htmlInspector.countHeaders(doc));
+
+		result.setLinkCount(linksInspector.countLinks(doc, url));
+
+		result.setHasLogin(htmlInspector.hasLogin(doc));
+
 		return result;
 	}
 
