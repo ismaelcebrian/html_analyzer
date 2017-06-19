@@ -47,8 +47,8 @@
       table.addDataRow("h" + i, data.headers["h" + i]);
     }
     table.addSectionRow("Number of Links:")
-      .addDataRow("Internal", data.linkCount.internal)
-      .addDataRow("External", data.linkCount.external);
+      .addDataRow("Internal", data.links.linkCount.internal)
+      .addDataRow("External", data.links.linkCount.external);
     table.addDataRow("Login Form", data.hasLogin? "Yes" : "No", true);
     analyticsDiv.innerHTML = table.toHtml();
 

@@ -55,7 +55,7 @@ public class HtmlAnalyticsServiceImpl implements HtmlAnalyticsService {
 
 		result.setHeaders(htmlInspector.countHeaders(doc));
 
-		result.setLinkCount(linksInspector.countLinks(doc, url));
+		result.setLinks(linksInspector.countLinks(doc, url));
 
 		result.setHasLogin(htmlInspector.hasLogin(doc));
 

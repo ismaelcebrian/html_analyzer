@@ -13,9 +13,17 @@ public class AnalyticsResult {
 
 	private HeaderCount headers;
 
-	private LinkCount linkCount;
-
 	private boolean hasLogin;
+	
+	private LinkInfo links; 
+
+	public LinkInfo getLinks() {
+		return links;
+	}
+
+	public void setLinks(LinkInfo links) {
+		this.links = links;
+	}
 
 	public String getUrl() {
 		return url;
@@ -47,14 +55,6 @@ public class AnalyticsResult {
 
 	public void setHeaders(HeaderCount headers) {
 		this.headers = headers;
-	}
-
-	public LinkCount getLinkCount() {
-		return linkCount;
-	}
-
-	public void setLinkCount(LinkCount linkCount) {
-		this.linkCount = linkCount;
 	}
 
 	public boolean isHasLogin() {

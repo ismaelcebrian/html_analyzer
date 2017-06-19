@@ -2,13 +2,13 @@ package com.anon.challenge.analyzer.inspector;
 
 import org.jsoup.nodes.Document;
 
-import com.anon.challenge.analyzer.response.LinkCount;
+import com.anon.challenge.analyzer.response.LinkInfo;
 
 /**
  * Component that count the number of links in a parsed HTML document
  */
 public interface LinksInspector {
 	
-	LinkCount countLinks(Document doc, String url);
+	LinkInfo countLinks(Document doc, String url);
 
 }

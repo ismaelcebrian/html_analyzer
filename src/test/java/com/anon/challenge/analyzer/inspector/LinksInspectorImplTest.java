@@ -29,7 +29,7 @@ public class LinksInspectorImplTest {
 		html += BOTTOM;
 		
 		Document doc = Jsoup.parse(html, "http://localhost:8080");
-		LinkCount countLinks = inspector.countLinks(doc, "http://localhost:8080");
+		LinkCount countLinks = inspector.countLinks(doc, "http://localhost:8080").getLinkCount();
 		assertEquals(2, countLinks.getInternal());
 		assertEquals(1, countLinks.getExternal());
 	}
@@ -40,7 +40,7 @@ public class LinksInspectorImplTest {
 		html += FULL;
 		
 		Document doc = Jsoup.parse(html, "http://localhost:8080");
-		LinkCount countLinks = inspector.countLinks(doc, "http://localhost:8080");
+		LinkCount countLinks = inspector.countLinks(doc, "http://localhost:8080").getLinkCount();
 		assertEquals(0, countLinks.getInternal());
 		assertEquals(0, countLinks.getExternal());
 	}
@@ -56,7 +56,7 @@ public class LinksInspectorImplTest {
 		html += BOTTOM;
 		
 		Document doc = Jsoup.parse(html, "http://google.com");
-		LinkCount countLinks = inspector.countLinks(doc, "http://google.com");
+		LinkCount countLinks = inspector.countLinks(doc, "http://google.com").getLinkCount();
 		assertEquals(3, countLinks.getInternal());
 		assertEquals(1, countLinks.getExternal());
 	}
@@ -73,7 +73,7 @@ public class LinksInspectorImplTest {
 		html += BOTTOM;
 		
 		Document doc = Jsoup.parse(html, "http://google.co.uk");
-		LinkCount countLinks = inspector.countLinks(doc, "http://google.co.uk");
+		LinkCount countLinks = inspector.countLinks(doc, "http://google.co.uk").getLinkCount();
 		assertEquals(3, countLinks.getInternal());
 		assertEquals(2, countLinks.getExternal());
 	}

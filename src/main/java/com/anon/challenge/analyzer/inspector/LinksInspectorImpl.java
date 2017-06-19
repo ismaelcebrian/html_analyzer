@@ -2,9 +2,13 @@ package com.anon.challenge.analyzer.inspector;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -12,7 +16,10 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import com.anon.challenge.analyzer.error.ApplicationException;
+import com.anon.challenge.analyzer.link.LinkChecker;
 import com.anon.challenge.analyzer.response.LinkCount;
+import com.anon.challenge.analyzer.response.LinkDetails;
+import com.anon.challenge.analyzer.response.LinkInfo;
 
 @Component
 public class LinksInspectorImpl implements LinksInspector {
@@ -20,8 +27,11 @@ public class LinksInspectorImpl implements LinksInspector {
 	private Logger log = Logger.getLogger(LinksInspectorImpl.class.getName());
 
 	@Override
-	public LinkCount countLinks(Document doc, String url) {
-		LinkCount result = new LinkCount();
+	public LinkInfo countLinks(Document doc, String url) {
+		LinkInfo result = new LinkInfo();
+		LinkCount linkCount = new LinkCount();
+		result.setLinkCount(linkCount);
+		result.setLinkList(new ArrayList<>());
 		URI parsedUrl;
 		try {
 			parsedUrl = new URI(url);
@@ -33,20 +43,21 @@ public class LinksInspectorImpl implements LinksInspector {
 		}
 		String domain = extractDomain(parsedUrl);
 		log.debug("querying links");
-		Elements links = doc.select("a[href]");
-		log.debug(String.format("Number of links found: %d", links.size()));
-		
+		Elements linkElements = doc.select("a[href]");
+		log.debug(String.format("Number of links found: %d", linkElements.size()));
+		List<LinkChecker> linkTasks = new ArrayList<>();
 		//iterate the links found, and compare the domain to count as external or internal
 		int internal = 0, external = 0;
-		for (int i = 0; i < links.size(); i++) {
-			String href = links.get(i).attr("abs:href");
+		for (int i = 0; i < linkElements.size(); i++) {
+			String href = linkElements.get(i).attr("abs:href");
 			try {
-				URI linkUrl = new URI(href);
-				if (!"http".equals(linkUrl.getScheme()) && !"https".equals(linkUrl.getScheme())) {
+				URI linkUri = new URI(href);
+				if (!"http".equals(linkUri.getScheme()) && !"https".equals(linkUri.getScheme())) {
 					//ignore other types of links
 					continue;
 				}
-				if (domain.equals(extractDomain(linkUrl))) {
+				linkTasks.add(new LinkChecker(linkUri));
+				if (domain.equals(extractDomain(linkUri))) {
 					internal++;
 				} else {
 					external++;
@@ -55,8 +66,28 @@ public class LinksInspectorImpl implements LinksInspector {
 				// Just ignore links with malformed URLs
 			}
 		}
-		result.setInternal(internal);
-		result.setExternal(external);
+		
+		linkCount.setInternal(internal);
+		linkCount.setExternal(external);
+		
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		try {
+			List<Future<LinkDetails>> linkTest = executorService.invokeAll(linkTasks);
+			for (Future<LinkDetails> future : linkTest) {
+				try {
+					LinkDetails linkDetails = future.get();
+					result.getLinkList().add(linkDetails);
+					
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
@@ -82,16 +113,14 @@ public class LinksInspectorImpl implements LinksInspector {
 		//Domains of the type google.com
 		if(last.length() == 3) {
 			List<String> domainLabels = labels.subList(labels.size() -2, labels.size());
-			Optional<String> domain = domainLabels.stream().reduce((s1, s2) -> s1 + "." + s2);
-			return domain.get();
+			return String.join(".", domainLabels);
 			
 		} 
 		
 		//Domains like google.co.uk
 		if(last.length() == 2) {
 			List<String> domainLabels = labels.subList(labels.size() -3, labels.size());
-			Optional<String> domain = domainLabels.stream().reduce((s1, s2) -> s1 + "." + s2);
-			return domain.get();
+			return String.join(".", domainLabels);
 			
 		} 
 		return host;
